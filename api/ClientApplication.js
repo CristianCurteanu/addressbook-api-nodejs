@@ -11,9 +11,13 @@ module.exports.register = function(request, response) {
         key: token
     })
     if (client.save()) {
-        response.send({ token: token })
+        if (process.env.NODE_ENV === 'development') {
+            response.send({ token: token, uuid: uuidSecret })
+        } else {
+            response.send({ token: token })
+        }
     } else {
         response.status(500)
-        response.send({ token: token })
+        response.send({ fail: 'Client not updated' })
     }
 }
