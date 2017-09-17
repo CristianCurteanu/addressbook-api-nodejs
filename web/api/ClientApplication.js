@@ -1,6 +1,6 @@
-const Client = require('../models/Client');
+const Client = require('../../models/Client');
 const uuid = require('uuid');
-const JsonWebToken = require('../services/jwt');
+const JsonWebToken = require('../../services/jwt');
 
 module.exports.register = function(request, response) {
     let uuidSecret = uuid.v4();

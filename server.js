@@ -9,10 +9,15 @@ var mongoose = require('mongoose');
 
 var User = require('./models/User');
 
+// Middlewares includes
 var bodyParser = require('body-parser');
+var cookiesMiddleware = require('./middlewares/cookies')
+var morgan = require('morgan')
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookiesMiddleware);
+app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'))
 
 // API Documentation
 let swaggerSpec = require('./services/swagger/definition');

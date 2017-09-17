@@ -2,20 +2,17 @@ var JWT = require('jsonwebtoken')
 
 const TokenDecode = (function() {
     function decodeToken(token, secret, callback) {
-        JWT.verify(token, secret, { algorithms: ['RS256'] }, function(error, decoded) {
-            if (error) {
-                return error
-            } else {
-                return callback(decoded.payload)
-            }
-        })
+        // TODO: Make it asynchronous
+        try {
+            return JWT.verify(token, secret)
+        } catch (error) {
+            return error
+        }
     }
 
     return {
         payload: function(token, secret) {
-            return decodeToken(token, secret, function(decoded) {
-                return decoded.payload
-            })
+            return decodeToken(token, secret).data
         },
 
         isExpired: function(token, secret) {
